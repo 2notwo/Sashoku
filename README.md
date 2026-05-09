@@ -1,0 +1,2 @@
+# Sashoku
+Daily sudoku app
