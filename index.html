@@ -8,7 +8,34 @@
 </head>
 
 <body>
-    <h1>Coming Soon...</h1>
+    <header>
+        <h1>Sashoku</h1>
+        <p class="subtitle">Daily Sudoku</p>
+    </header>
+
+    <main>
+        <div class="info-bar">
+            <div class="difficulty">⭐ Easy</div>
+            <div class="timer">00:00</div>
+            <div class="date"></div>
+        </div>
+        <div class="board" id="board"></div>
+        <div class="controls">
+            <button class="btn" id="hint-btn">💡 Hint</button>
+            <button class="btn" id="notes-btn ">✏️ Notes</button>
+            <button class="btn" id="check-btn">✅ Check</button>
+        </div>
+    </main>
+
+    <div class="win-screen" id="win-screen" hidden>
+        <div class="win-card">
+            <div class="win-illustration" id="win-illustration"></div>
+            <h2>You did it! 🎉</h2>
+            <p id="win-message">LETS FRICKING GOOOO!</p>
+            <button class="btn" id="play-again-btn">Play again tomorrow</button>
+        </div>
+    </div>
+    <script src="sudoku.js"></script>
 </body>
 
 </html>
