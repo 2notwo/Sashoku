@@ -85,9 +85,16 @@ function drawBoard() {
           }
 
           if (boardComplete) {
+            console.log("board complete");
             if (checkWin()) {
-              // show win screen
+              console.log("checkwin returned true");
+              const winScreen = document.getElementById("win-screen");
+              winScreen.removeAttribute = "hidden";
+            } else {
+              console.log("checkwin false");
             }
+          } else {
+            console.log("board not complete");
           }
         });
       } else {
