@@ -50,6 +50,33 @@ function checkWin() {
   return true;
 }
 
+function isValid(board, row, col, num) {
+  //row check
+  for (let i = 0; i < 9; i++) {
+    if (board[row][i] === num) {
+      return false;
+    }
+  }
+  //column check
+  for (let i = 0; i < 9; i++) {
+    if (board[i][col] === num) {
+      return false;
+    }
+  }
+  //box check
+  const boxRow = Math.floor(row / 3) * 3;
+  const boxCol = Math.floor(col / 3) * 3;
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      if (board[boxRow + i][boxCol + j] === num) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
 //Loop through all 81 cells and appends a div for each one to the board element. If the cell is 0 leave the text empty, other wise show number
 function drawBoard() {
   const boardEl = document.getElementById("board");
@@ -89,7 +116,7 @@ function drawBoard() {
             if (checkWin()) {
               console.log("checkwin returned true");
               const winScreen = document.getElementById("win-screen");
-              winScreen.removeAttribute = "hidden";
+              winScreen.removeAttribute("hidden");
             } else {
               console.log("checkwin false");
             }
