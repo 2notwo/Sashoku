@@ -74,22 +74,13 @@ function drawBoard() {
           } else {
             console.log("Wrong...");
           }
-          //allInputs = document.querySelectorAll("input");
-          //for (let i = 0; i < allInputs.length; i++) {
-          //if (allInputs[i].value === "") {
-          //return false;
-          //} else {
-          //if (checkWin() === true) {
-          //winscreen
-          //}
-          //}
-          //}
           const allInputs = document.querySelectorAll("input");
           let boardComplete = true;
 
           for (let i = 0; i < allInputs.length; i++) {
             if (allInputs[i].value === "") {
               boardComplete = false;
+              break;
             }
           }
 
