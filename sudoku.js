@@ -64,6 +64,7 @@ function isValid(board, row, col, num) {
     }
   }
   //box check
+  //get cords for top left of box
   const boxRow = Math.floor(row / 3) * 3;
   const boxCol = Math.floor(col / 3) * 3;
   for (let i = 0; i < 3; i++) {
@@ -75,6 +76,26 @@ function isValid(board, row, col, num) {
   }
 
   return true;
+}
+
+function solve(board) {
+  for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+      if (board[row][col] === 0) {
+        for (let num = 1; num <= 9; num++) {
+          if (isValid(board, row, col, num)) {
+            board[row][col] = num;
+            if (solve(board)) {
+              return true;
+            }
+            board[row][col] = 0; // backtrack
+          }
+        }
+        return false; // nothing worked
+      }
+    }
+  }
+  return true; // no empty cells left
 }
 
 //Loop through all 81 cells and appends a div for each one to the board element. If the cell is 0 leave the text empty, other wise show number
