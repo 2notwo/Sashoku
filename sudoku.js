@@ -30,6 +30,26 @@ function isEmpty(row, col) {
   return board[row][col] === 0;
 }
 
+function checkWin() {
+  for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+      const cell = document.querySelector(
+        `[data-row="${row}"][data-col="${col}"]`,
+      );
+      const input = cell.querySelector("input");
+
+      if (input === null) {
+        // pre-filled cell, skip it
+      } else {
+        if (parseInt(input.value) !== solution[row][col]) {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+}
+
 //Loop through all 81 cells and appends a div for each one to the board element. If the cell is 0 leave the text empty, other wise show number
 function drawBoard() {
   const boardEl = document.getElementById("board");
@@ -40,15 +60,13 @@ function drawBoard() {
       cell.classList.add("cell");
       cell.dataset.row = row;
       cell.dataset.col = col;
-      if (board[row][col] === 0) {
+      if (isEmpty(row, col)) {
         const input = document.createElement("input");
         input.type = "text";
         input.maxLength = 1;
         cell.appendChild(input);
+
         input.addEventListener("input", function () {
-          //console.log("Row: ", cell.dataset.row);
-          //console.log("Col: ", cell.dataset.col);
-          //console.log("Value Entered: ", input.value);
           const r = parseInt(cell.dataset.row);
           const c = parseInt(cell.dataset.col);
           if (parseInt(input.value) === solution[r][c]) {
@@ -56,9 +74,33 @@ function drawBoard() {
           } else {
             console.log("Wrong...");
           }
+          //allInputs = document.querySelectorAll("input");
+          //for (let i = 0; i < allInputs.length; i++) {
+          //if (allInputs[i].value === "") {
+          //return false;
+          //} else {
+          //if (checkWin() === true) {
+          //winscreen
+          //}
+          //}
+          //}
+          const allInputs = document.querySelectorAll("input");
+          let boardComplete = true;
+
+          for (let i = 0; i < allInputs.length; i++) {
+            if (allInputs[i].value === "") {
+              boardComplete = false;
+            }
+          }
+
+          if (boardComplete) {
+            if (checkWin()) {
+              // show win screen
+            }
+          }
         });
       } else {
-        cell.textContent = board[row][col];
+        cell.textContent = getCell(row, col);
       }
       boardEl.appendChild(cell);
     }
