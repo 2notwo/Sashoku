@@ -26,6 +26,8 @@ function drawBoard() {
     for (let col = 0; col < 9; col++) {
       const cell = document.createElement("div");
       cell.classList.add("cell");
+      cell.dataset.row = row;
+      cell.dataset.col = col;
 
       if (board[row][col] === 0) {
         const input = document.createElement("input");
