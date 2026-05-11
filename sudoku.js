@@ -88,14 +88,14 @@ function solve(board) {
             if (solve(board)) {
               return true;
             }
-            board[row][col] = 0; // backtrack
+            board[row][col] = 0; // it pretends the cell was never filled so the next attempt treats it as empty. Without this the board would get corrupted with wrong numbers.
           }
         }
-        return false; // nothing worked
+        return false; // it tells the previous solve call "this path didn't work, try something different". The previous call then resets its cell to 0 and tries the next number.
       }
     }
   }
-  return true; // no empty cells left
+  return true; // once there are no empty cells left the loop finishes without ever hitting return false, so it falls through to return true. That true bubbles up through every recursive call like a chain reaction — each waiting solve sees true and immediately returns true itself, all the way back to the original call.
 }
 
 //Loop through all 81 cells and appends a div for each one to the board element. If the cell is 0 leave the text empty, other wise show number

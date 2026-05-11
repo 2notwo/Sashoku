@@ -1,2 +1,3 @@
 # Sashoku
-Daily sudoku app
+
+Daily sudoku puzzle web app using HTML, CSS and JavaScript
