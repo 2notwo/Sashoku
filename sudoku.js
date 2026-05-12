@@ -163,6 +163,7 @@ function drawBoard() {
           }
         });
       } else {
+        cell.classList.add("cell-fixed");
         cell.textContent = getCell(row, col);
       }
       boardEl.appendChild(cell);
@@ -171,4 +172,3 @@ function drawBoard() {
 }
 
 drawBoard();
-console.log("seed:", seed);
