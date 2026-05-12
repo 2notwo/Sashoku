@@ -1,26 +1,31 @@
-const board = [
-  [5, 3, 0, 0, 7, 0, 0, 0, 0],
-  [6, 0, 0, 1, 9, 5, 0, 0, 0],
-  [0, 9, 8, 0, 0, 0, 0, 6, 0],
-  [8, 0, 0, 0, 6, 0, 0, 0, 3],
-  [4, 0, 0, 8, 0, 3, 0, 0, 1],
-  [7, 0, 0, 0, 2, 0, 0, 0, 6],
-  [0, 6, 0, 0, 0, 0, 2, 8, 0],
-  [0, 0, 0, 4, 1, 9, 0, 0, 5],
-  [0, 0, 0, 0, 8, 0, 0, 7, 9],
-];
+// Seed and random function
+const today = new Date();
+const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+const random = mulberry32(seed)
 
-const solution = [
-  [5, 3, 4, 6, 7, 8, 9, 1, 2],
-  [6, 7, 2, 1, 9, 5, 3, 4, 8],
-  [1, 9, 8, 3, 4, 2, 5, 6, 7],
-  [8, 5, 9, 7, 6, 1, 4, 2, 3],
-  [4, 2, 6, 8, 5, 3, 7, 9, 1],
-  [7, 1, 3, 9, 2, 4, 8, 5, 6],
-  [9, 6, 1, 5, 3, 7, 2, 8, 4],
-  [2, 8, 7, 4, 1, 9, 6, 3, 5],
-  [3, 4, 5, 2, 8, 6, 1, 7, 9],
-];
+//empty board
+const board = Array(9).fill(null).map(() => Array(9).fill(0));
+
+//solve board
+solve(board);
+
+//copy solution from board
+const solution = board.map(row => [...row]);
+
+// Remove numbers to make puzzle
+removeNumbers(board, 30);
+
+// https://stackoverflow.com/a/47593316
+// A simple pseudo-random number generator that can be seeded, so the same seed will always produce the same sequence of numbers.
+function mulberry32(seed) {
+  return function () {
+    seed |= 0;
+    seed = seed + 0x6D2B79F5 | 0;
+    var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+}
 
 function getCell(row, col) {
   return board[row][col];
@@ -98,6 +103,18 @@ function solve(board) {
   return true; // once there are no empty cells left the loop finishes without ever hitting return false, so it falls through to return true. That true bubbles up through every recursive call like a chain reaction — each waiting solve sees true and immediately returns true itself, all the way back to the original call.
 }
 
+function removeNumbers(board, count) {
+  let removed = 0;
+  while (removed < count) {
+    const row = Math.floor(random() * 9);
+    const col = Math.floor(random() * 9);
+    if (board[row][col] !== 0) {
+      board[row][col] = 0;
+      removed++;
+    }
+  }
+}
+
 //Loop through all 81 cells and appends a div for each one to the board element. If the cell is 0 leave the text empty, other wise show number
 function drawBoard() {
   const boardEl = document.getElementById("board");
@@ -154,3 +171,4 @@ function drawBoard() {
 }
 
 drawBoard();
+console.log("seed:", seed);
