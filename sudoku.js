@@ -121,10 +121,19 @@ function drawBoard() {
 
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
+
       const cell = document.createElement("div");
       cell.classList.add("cell");
       cell.dataset.row = row;
       cell.dataset.col = col;
+
+      if ((col + 1) % 3 === 0 && col !== 8) {
+        cell.classList.add("border-right");
+      }
+      if ((row + 1) % 3 === 0 && row !== 8) {
+        cell.classList.add("border-bottom");
+      }
+
       if (isEmpty(row, col)) {
         const input = document.createElement("input");
         input.type = "text";
