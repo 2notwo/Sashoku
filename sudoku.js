@@ -15,6 +15,15 @@ const solution = board.map(row => [...row]);
 // Remove numbers to make puzzle
 removeNumbers(board, 30);
 
+// Shuffle numbers so they are tried in a random order each time.
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 // https://stackoverflow.com/a/47593316
 // A simple pseudo-random number generator that can be seeded, so the same seed will always produce the same sequence of numbers.
 function mulberry32(seed) {
@@ -87,7 +96,8 @@ function solve(board) {
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
       if (board[row][col] === 0) {
-        for (let num = 1; num <= 9; num++) {
+        const nums = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        for (let num of nums) {
           if (isValid(board, row, col, num)) {
             board[row][col] = num;
             if (solve(board)) {
